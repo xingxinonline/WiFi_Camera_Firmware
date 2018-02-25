@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<userOverrides>
+  <override>
+    <path>C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\ov7670config.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\sccb.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\ov7670.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\sccb.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\client_task.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\client_task_demo.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\global_config.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\util.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\wifi_task.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\wifi_task_demo.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\client_task.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\delay.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\ov7670.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\sccb.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\util.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\wifi_task.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\wifi_task_demo.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_uart.h</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_uart.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera\FirmwareDev\WiFi_Camera\Src\main.c</path>
+    <encoding>System</encoding>
+  </override>
+  <override>
+    <path>D:\private\WiFi_Camera_Prj\FirmwareDev\WiFi_Camera\Application\Source\wifi_task.c</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\client_task.h</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\client_task_demo.h</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\global_config.h</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\util.h</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Include\wifi_task.h</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\client_task.c</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\util.c</path>
+    <encoding>UTF-8</encoding>
+  </override>
+  <override>
+    <path>F:\F3 &#x6B27;&#x53F8;&#x6717; OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\Application\Source\wifi_task.c</path>
+    <encoding>UTF-8</encoding>
+  </override>
+</userOverrides>
+
+
