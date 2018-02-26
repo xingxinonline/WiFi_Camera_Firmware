@@ -10,18 +10,26 @@ Description:  insert version(2bytes) crc16(2bytes) and file size(4bytes) at the 
     7. add 4bytes filesize
     8. create ota firmware file
     
+    IAR Build Actions: python $PROJ_DIR$\script\generate_v2.py $PROJ_DIR$
+    
 Created on Wed Feb 14 14:36:24 2018
 
 @author: Douglas Xie
 @email:  douglas2011@qq.com
 """
 
+import sys
 import time
 
 # bin file location
-filedir = '../WiFi_Camera/Exe/WiFi_Camera.bin'
-savedir = '../WiFi_Camera/Exe/OTA_Firmware_V'
-
+if len(sys.argv) == 1:
+    filedir = '../WiFi_Camera/Exe/WiFi_Camera.bin'
+    savedir = '../WiFi_Camera/Exe/OTA_Firmware_V'
+else:
+    working_path = sys.argv[1]
+    filedir = working_path + '/WiFi_Camera/Exe/WiFi_Camera.bin'
+    savedir = working_path + '/WiFi_Camera/Exe/OTA_Firmware_V'
+    
 #firmware version pre-str
 prestr = 'RunTime Version V'
 
@@ -55,13 +63,9 @@ step:
     8. create ota firmware file
 '''
 
-print("******************************************************")
-print("*                                                    *")
-print("*    Python Script for Generate OTA Firmware File    *")
-print("*                                                    *")
-print("*                                  by Douglas Xie    *")
-print("*                                                    *")
-print("******************************************************")
+print("***************************************************************")
+print("* Python Script for Generate OTA Firmware File by Douglas Xie")
+print("***************************************************************")
 print("read original firmware data")
 fw = open(filedir, 'rb')
 fw_data = fw.read()
@@ -120,10 +124,14 @@ ota = open(savedir, 'wb')
 ota.write(new_data)
 ota.flush()
 ota.close()
-print("create", otaname, "success")
+print("create OTA firmware success")
+print("  >>> path: ", savedir)
+print("  >>> size: ", len(new_data), "bytes")
 print("finish")
-print("close windows after 5 second")
-for i in range(5):
-    print(5 - i)
-    time.sleep(1)
+
+if len(sys.argv) == 1:
+    print("close windows after 5 second")
+    for i in range(5):
+        print(5 - i)
+        time.sleep(1)
     
