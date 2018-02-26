@@ -649,7 +649,7 @@
       <archiveVersion>1</archiveVersion>
       <data>
         <prebuild></prebuild>
-        <postbuild></postbuild>
+        <postbuild>python $PROJ_DIR$\script\generate_v2.py $PROJ_DIR$</postbuild>
       </data>
     </settings>
     <settings>
@@ -1183,6 +1183,12 @@
       </file>
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rcc_ex.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rtc.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_rtc_ex.c</name>
       </file>
       <file>
         <name>$PROJ_DIR$\..\Drivers\STM32F4xx_HAL_Driver\Src\stm32f4xx_hal_sd.c</name>

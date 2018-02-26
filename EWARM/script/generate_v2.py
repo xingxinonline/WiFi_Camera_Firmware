@@ -66,13 +66,15 @@ step:
 print("***************************************************************")
 print("* Python Script for Generate OTA Firmware File by Douglas Xie")
 print("***************************************************************")
-print("read original firmware data")
+if len(sys.argv) == 1:
+	print("read original firmware data")
 fw = open(filedir, 'rb')
 fw_data = fw.read()
 fw.close()
 fw_size = len(fw_data)
 
-print("searching firmware version")
+if len(sys.argv) == 1:
+	print("searching firmware version")
 start_index = 0
 for i in range(fw_size-17):
     try:
@@ -105,9 +107,12 @@ except:
     fw_ver = 0
     ver_str = "0.00"
 
-print("generating crc16...")
+if len(sys.argv) == 1:
+	print("generating crc16...")
 fw_crc16 = crc16_ccitt(fw_data, fw_size)
-print("  >>> generating crc16 success")
+if len(sys.argv) == 1:
+	print("  >>> generating crc16 success")
+	
 insert_data = []
 insert_data.append(fw_ver & 0xFF)
 insert_data.append((fw_ver >> 8) & 0xFF)
@@ -115,16 +120,19 @@ insert_data.append(fw_crc16 & 0xFF)
 insert_data.append((fw_crc16 >> 8) & 0xFF)
 for i in range(4):
     insert_data.append((fw_size >> (i * 8)) & 0xFF)
-
 new_data = bytes(insert_data) + fw_data;
-print("generate ota firmware file")
+
+if len(sys.argv) == 1:
+	print("generate ota firmware file")
 savedir = savedir + ver_str + ".bin"
 otaname = 'OTA_Firmware_V'+ ver_str + ".bin"
 ota = open(savedir, 'wb')
 ota.write(new_data)
 ota.flush()
 ota.close()
-print("create OTA firmware success")
+if len(sys.argv) == 1:
+	print("create OTA firmware success")
+print("  >>> filename: ", otaname)
 print("  >>> path: ", savedir)
 print("  >>> size: ", len(new_data), "bytes")
 print("finish")

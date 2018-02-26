@@ -68,6 +68,9 @@
 #define Motor_LedToggle()       HAL_GPIO_TogglePin(MOTOR_LED)
 
 #define MOTOR_DEFAULT_DIR       'R'
+#define MOTOR_DEFAULT_FREQ      1000     /* 1kHz */
+#define MOTOR_DEFAULT_STEP      200      /* unit step for feed 1 unit */
+
 #define MOTOR_DEFAULT_PERIOD    5000     /* 10MHz / 5000 / 2 = 1kHz */
 
 /* Data Type Define -----------------------------------------------------------------------------*/

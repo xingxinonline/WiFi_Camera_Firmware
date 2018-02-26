@@ -81,25 +81,49 @@ typedef union APP_STATUS
     uint8_t  array[24];
 } App_Info_t;
 
+#pragma   pack(1)
+typedef struct CFG_SCH
+{
+    uint8_t t_hour;
+    uint8_t t_minute;
+    uint8_t feed_m1;
+    uint8_t feed_m2;
+    uint8_t feed_m3;
+    uint8_t feed_m4;
+    uint8_t feed_m5;
+    /* total 7 bytes */
+} SchCfg_t;
+
+typedef struct CFG_MOTOR
+{
+    uint8_t m_dir[5];
+    uint16_t m_freq[5];
+    uint16_t m_step[5];
+    /* total 25 bytes */
+} MotorCfg_t;
+
 typedef union APP_CONFIG
 {
     struct
     {
-        uint32_t esp8266_mode;      /* AP_MODE or STATION_MODE */
-        uint32_t config_magic;      /* show config is fill or not */
+        uint32_t    esp8266_mode;      /* AP_MODE or STATION_MODE */
+        uint32_t    config_magic;      /* show config is fill or not */
         /* station mode config */
-        uint8_t  wifi_ssid[32];
-        uint8_t  wifi_passwd[32];
-        uint8_t  account_id[32];
-        uint8_t  account_passwd[32];
-        uint8_t  cloud_server[64];
-        uint16_t cloud_port;      
-        uint16_t NC;      
-        uint32_t checksum;
+        uint8_t     wifi_ssid[32];
+        uint8_t     wifi_passwd[32];
+        uint8_t     account_id[32];
+        uint8_t     account_passwd[32];
+        uint8_t     cloud_server[64];
+        uint16_t    cloud_port;     //2     
+        MotorCfg_t  motor_cfg;      //25
+        SchCfg_t    schedule[5];    //35
+        uint16_t    sch_count;      //2     
+        uint32_t    checksum;
     };
-    uint32_t array32[50];
-    uint8_t  array[200];
+    uint32_t array32[65];
+    uint8_t  array[260];
 } App_Config_t;
+#pragma   pack()
 
 /* Public variables ----------------------------------------------------------------------------*/
 extern App_Info_t app_info;

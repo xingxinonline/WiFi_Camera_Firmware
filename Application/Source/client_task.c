@@ -523,10 +523,18 @@ void Client_OtaVerify(void)
 
 void Client_FactoryNew(void)
 {
+    uint8_t i = 0;
     DBG_SendMessage(DBG_MSG_CLIENT, "Client: Factory New\r\n");
     
     /* reset default value */
     memset(&app_config, 0, sizeof(app_config));   
+    /* write default motor config */
+    for(i = 0; i < 5; i++)
+    {
+        app_config.motor_cfg.m_dir[i] = MOTOR_DEFAULT_DIR;
+        app_config.motor_cfg.m_freq[i] = MOTOR_DEFAULT_FREQ;
+        app_config.motor_cfg.m_step[i] = MOTOR_DEFAULT_STEP;
+    }
     Mem_WriteConfig();
     Client_RespondHandler( MSG_FB_OK );
     
