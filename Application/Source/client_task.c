@@ -33,6 +33,10 @@ Client_Message_t feedback;
 QueueHandle_t request_queue;
 QueueHandle_t respond_queue;
 
+extern RTC_HandleTypeDef hrtc;
+extern RTC_TimeTypeDef sTime;
+extern RTC_DateTypeDef sDate;
+
 /* Private Variable -----------------------------------------------------------------------------*/
 Client_Ota_t ota_info;
 
@@ -382,8 +386,32 @@ void Client_SetMotor(void)
 /*******************************************************************************/
 void Client_SetTime(void)
 {
-    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set RTC\r\n");
-    Client_RespondHandler( MSG_FB_OK );
+    HAL_StatusTypeDef ret;
+    
+    sDate.Year = (message.payload[0] + (message.payload[1] << 8) - 2000) & 0xFF;
+    sDate.Month = message.payload[2];
+    sDate.Date = message.payload[3];
+    sTime.Hours = message.payload[4];
+    sTime.Minutes = message.payload[5];
+    sTime.Seconds = message.payload[6];
+   
+    /* @TODO: add function to write external rtc */
+    
+    /* set to mcu rtc */
+    ret =  HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD);
+    ret |= HAL_RTC_SetDate(&hrtc, &sDate, RTC_FORMAT_BCD);
+        
+    if( ret == HAL_OK)
+    {
+        HAL_RTCEx_BKUPWrite(&hrtc,RTC_BKP_DR0,0x32F2);
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set RTC OK\r\n");
+        Client_RespondHandler( MSG_FB_OK );
+    }
+    else
+    {
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set RTC Error\r\n");
+        Client_RespondHandler( MSG_FB_ERROR );
+    }
 }
 
 /*******************************************************************************/

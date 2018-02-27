@@ -649,7 +649,7 @@
       <archiveVersion>1</archiveVersion>
       <data>
         <prebuild></prebuild>
-        <postbuild>python $PROJ_DIR$\script\generate_v2.py $PROJ_DIR$</postbuild>
+        <postbuild>python $PROJ_DIR$\script\generate_v3.py $PROJ_DIR$</postbuild>
       </data>
     </settings>
     <settings>

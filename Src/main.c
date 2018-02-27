@@ -347,7 +347,8 @@ static void MX_RTC_Init(void)
     
     /**Initialize RTC and set the Time and Date 
     */
-    if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR0) != 0x32F2){
+    if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR0) != 0x32F2)
+    {
         if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
         {
             _Error_Handler(__FILE__, __LINE__);
