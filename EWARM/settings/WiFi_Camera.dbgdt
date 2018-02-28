@@ -71,7 +71,7 @@
           
           
           
-        <item>camera_info</item><item>camera_state</item><item>wifi_ctrl_state</item><item>rx_buffer</item><item>client_data</item><item>wifi_mac_string</item><item>app_info</item><item>app_config</item><item>event_bits</item><item>ota_info</item><item></item></expressions>
+        <item>camera_info</item><item>camera_state</item><item>wifi_ctrl_state</item><item>rx_buffer</item><item>client_data</item><item>wifi_mac_string</item><item>app_info</item><item>app_config</item><item>event_bits</item><item>ota_info</item><item/></expressions>
         <col-names>
           
           

@@ -691,7 +691,8 @@ static void MX_GPIO_Init(void)
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
-    
+    uint16_t key_press_time = 0;
+        
     /* USER CODE BEGIN 5 */
     DBG_SendMessage(DBG_MSG_TASK_STATE, APP_VER_DBG);
     //DBG_SendMessage(DBG_MSG_TASK_STATE, "Default Task Start\r\n");
@@ -757,7 +758,22 @@ void StartDefaultTask(void const * argument)
     /* Infinite loop */
     for(;;)
     {
-        osDelay(1000);
+        if(HAL_GPIO_ReadPin(KEY1_GPIO_Port, KEY1_Pin) == GPIO_PIN_RESET)
+        {
+            key_press_time++;
+            
+            /* long press 3second to erase config */
+            if(key_press_time > 30)
+            {
+                Mem_ReadConfig();
+            }
+        }
+        else
+        {
+            key_press_time = 0;
+        }
+        
+        osDelay(100);
     }
     /* USER CODE END 5 */ 
 }

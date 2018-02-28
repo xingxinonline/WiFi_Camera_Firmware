@@ -353,9 +353,20 @@ void Client_SetWebAccount(void)
         {
             app_config.account_passwd[i] = message.payload[i + server_len + port_len + id_len + 4];
         }
+        
+        app_config.cloud_config_state = APP_CONFIG_OK;
+        if(app_config.wifi_config_state == APP_CONFIG_OK)
+        {
+            /* switch to station if wifi and cloud all config ok */
+            app_config.esp8266_mode = APP_ESP8266_STATION;
+        }
         Mem_WriteConfig();
         DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Account OK\r\n");
         Client_RespondHandler( MSG_FB_OK );
+        
+        DBG_SendMessage(DBG_MSG_CLIENT, "Reset and Switch to Station Mode\r\n");
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        HAL_NVIC_SystemReset();
     }
     else
     {
@@ -367,9 +378,47 @@ void Client_SetWebAccount(void)
 /*******************************************************************************/
 void Client_SetWifi(void)
 {
-    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set WiFi\r\n");
+    uint16_t i = 0;
+    uint8_t ssid_len = 0;
+    uint8_t passwd_len = 0;
     
-    Client_RespondHandler( MSG_FB_OK );
+    ssid_len = message.payload[0];
+    passwd_len = message.payload[1];
+    
+    if((message.length >= (ssid_len + passwd_len + 2)) &&
+       (ssid_len <= 32) && (passwd_len <= 32))
+    {
+        memset(app_config.wifi_ssid, 0, 32);
+        memset(app_config.wifi_passwd, 0, 32);
+        
+        for(i = 0; i < ssid_len; i++)
+        {
+            app_config.wifi_ssid[i] = message.payload[2 + i];
+        }
+        for(i = 0; i < passwd_len; i++)
+        {
+            app_config.wifi_passwd[i] = message.payload[2 + ssid_len + i];
+        }
+        
+        app_config.wifi_config_state = APP_CONFIG_OK;
+        if(app_config.cloud_config_state == APP_CONFIG_OK)
+        {
+            /* switch to station if wifi and cloud all config ok */
+            app_config.esp8266_mode = APP_ESP8266_STATION;
+        }
+        Mem_WriteConfig();
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set WiFi OK\r\n");
+        Client_RespondHandler( MSG_FB_OK );
+        
+        DBG_SendMessage(DBG_MSG_CLIENT, "Reset and Switch to Station Mode\r\n");
+        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        HAL_NVIC_SystemReset();
+    }
+    else
+    {
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set WiFi Error\r\n");
+        Client_RespondHandler( MSG_FB_ERROR );
+    }
 }
 
 /*******************************************************************************/
@@ -538,6 +587,7 @@ void Client_OtaVerify(void)
         Client_RespondHandler( MSG_FB_OK );
         
         /* delay 1 second and reboot to excute new app */
+        vTaskDelay(100 / portTICK_PERIOD_MS);
         DBG_SendMessage(DBG_MSG_CLIENT, "=== Device Reset After 3s ===\r\n");
         vTaskDelay(3000 / portTICK_PERIOD_MS);
         HAL_NVIC_SystemReset();

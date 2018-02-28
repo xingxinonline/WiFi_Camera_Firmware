@@ -61,8 +61,9 @@
 #define OTA_ADDR_END            ((uint32_t)0x0809FFFF)
 
 /* Application config parameter define */
-#define APP_ESP8266_STATION     ((uint32_t)0xABEA8266)  /* station or ap */
-#define APP_CONFIG_MAGIC        ((uint32_t)0xFE3A0249)  /* config or not */
+#define APP_ESP8266_SoftAP      ((uint32_t)0)           /* ap , default mode */
+#define APP_ESP8266_STATION     ((uint32_t)0xABEA8266)  /* station */
+#define APP_CONFIG_OK           ((uint8_t) 0x0755)
 
 /* Data Type Define -----------------------------------------------------------------------------*/
 typedef union APP_STATUS
@@ -107,7 +108,8 @@ typedef union APP_CONFIG
     struct
     {
         uint32_t    esp8266_mode;      /* AP_MODE or STATION_MODE */
-        uint32_t    config_magic;      /* show config is fill or not */
+        uint16_t    wifi_config_state;
+        uint16_t    cloud_config_state;
         /* station mode config */
         uint8_t     wifi_ssid[32];
         uint8_t     wifi_passwd[32];
@@ -133,6 +135,7 @@ extern App_Config_t app_config;
 
 void Mem_ReadInfo(void);
 void Mem_WriteInfo(void);
+void Mem_ResetConfig(void);
 void Mem_ReadConfig(void);
 void Mem_WriteConfig(void);
 void Mem_EraseApp(uint32_t start_addr, uint32_t end_addr);

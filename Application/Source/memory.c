@@ -105,6 +105,29 @@ void Mem_WriteInfo(void)
 }
 
 /*******************************************************************************
+* @Brief    Reset Config Sector Data to Default
+* @Param   
+* @Note    
+* @Return  
+*******************************************************************************/
+void Mem_ResetConfig(void)
+{
+    uint8_t i = 0;
+    
+    /* reset default value when checksum error */
+    memset(&app_config, 0, sizeof(app_config));   
+    
+    /* write default motor config */
+    for(i = 0; i < 5; i++)
+    {
+        app_config.motor_cfg.m_dir[i] = MOTOR_DEFAULT_DIR;
+        app_config.motor_cfg.m_freq[i] = MOTOR_DEFAULT_FREQ;
+        app_config.motor_cfg.m_step[i] = MOTOR_DEFAULT_STEP;
+    }
+    Mem_WriteConfig();
+}
+
+/*******************************************************************************
 * @Brief    Read Config Sector Data
 * @Param   
 * @Note    
@@ -124,16 +147,7 @@ void Mem_ReadConfig(void)
     if(app_config.checksum != Mem_GetChecksum32(app_config.array32, (sizeof(app_config)/4) - 1))
     {  
         /* reset default value when checksum error */
-        memset(&app_config, 0, sizeof(app_config));   
-        
-        /* write default motor config */
-        for(i = 0; i < 5; i++)
-        {
-            app_config.motor_cfg.m_dir[i] = MOTOR_DEFAULT_DIR;
-            app_config.motor_cfg.m_freq[i] = MOTOR_DEFAULT_FREQ;
-            app_config.motor_cfg.m_step[i] = MOTOR_DEFAULT_STEP;
-        }
-        Mem_WriteConfig();
+        Mem_ResetConfig();
     }
 }
 
