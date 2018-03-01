@@ -26,8 +26,8 @@
 #define APP_NAME_DISP   " AniTech System "
 
 #ifdef USE_DEMO_VERSION
-#define FW_VERSION      "V2.00"        
-#define HW_VERSION      "V2.00"
+#define FW_VERSION      "V1.00"        
+#define HW_VERSION      "V1.00"
 #define SN_CODE         "12345678"
 #endif
 

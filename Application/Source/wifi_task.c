@@ -1272,16 +1272,16 @@ WiFi_CtrlState_t WiFi_Ctrl_Idle(void)
     {
         if(client_id_active != 0xFF)
         {
-            /* Get camera post event */
+            /* Get camera push image event */
             event_bits = xEventGroupWaitBits(camera_event_group,
-                                             CAMERA_EVENT_POST_START,
+                                             CAMERA_EVENT_PUSH_IMAGE,
                                              pdTRUE,
                                              pdTRUE,
                                              0 );
             
-            if(( event_bits & CAMERA_EVENT_POST_START ) == CAMERA_EVENT_POST_START )
+            if(( event_bits & CAMERA_EVENT_PUSH_IMAGE ) == CAMERA_EVENT_PUSH_IMAGE )
             {
-                xEventGroupClearBits(camera_event_group, CAMERA_EVENT_POST_START);
+                xEventGroupClearBits(camera_event_group, CAMERA_EVENT_PUSH_IMAGE);
                 
                 next_state = WIFI_CTRL_SEND_IMAGE;
             }

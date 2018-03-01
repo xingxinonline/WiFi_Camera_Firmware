@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "D:\private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.general.xcl" --backend -f "D:\private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.general.xcl" --backend -f "E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "D:\private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.general.xcl" "--debug_file=%~1" --backend -f "D:\private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.driver.xcl" 
+"D:\Program Files (x86)\IAR Systems\Embedded Workbench 7.5\common\bin\cspybat" -f "E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.general.xcl" "--debug_file=%~1" --backend -f "E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware\EWARM\settings\WiFi_Camera.WiFi_Camera.driver.xcl" 
 
 @echo off 
 :end

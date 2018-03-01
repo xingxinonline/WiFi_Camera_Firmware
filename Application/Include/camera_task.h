@@ -38,10 +38,10 @@
 /* Camera event group single event */
 #define CAMERA_EVENT_PHOTO_START    (1 << 0)
 #define CAMERA_EVENT_PHOTO_DONE     (1 << 1)
-#define CAMERA_EVENT_SAVE_START     (1 << 2)
-#define CAMERA_EVENT_SAVE_DONE      (1 << 3)
-#define CAMERA_EVENT_POST_START     (1 << 4)
-#define CAMERA_EVENT_POST_DONE      (1 << 5)
+#define CAMERA_EVENT_SAVE_IMAGE     (1 << 2)
+#define CAMERA_EVENT_PUSH_IMAGE     (1 << 3)
+#define CAMERA_EVENT_POST_S         (1 << 4)
+#define CAMERA_EVENT_POST_DO        (1 << 5)
 
 /* Camera event group max waiting time */
 #define CAMERA_EVENT_WAITING        (1000 / portTICK_PERIOD_MS)

@@ -32,6 +32,9 @@ extern TIM_HandleTypeDef    htim9;
 extern TIM_HandleTypeDef    htim14;
 extern DCMI_HandleTypeDef   hdcmi;
 extern DMA_HandleTypeDef    hdma_dcmi;
+extern RTC_HandleTypeDef    hrtc;
+extern RTC_TimeTypeDef      sTime;
+extern RTC_DateTypeDef      sDate;
 
 #ifdef PRINT_JPG_DATA
 extern UART_HandleTypeDef   huart2;
@@ -140,10 +143,10 @@ void Camera_PhotoTask(void * argument)
             
         case CAMERA_SAVE:                                        
             /* Post save event to save task */
-            xEventGroupSetBits( camera_event_group, CAMERA_EVENT_SAVE_START);
+            xEventGroupSetBits( camera_event_group, CAMERA_EVENT_SAVE_IMAGE);
             
             camera_state = CAMERA_IDLE;
-            DBG_SendMessage( DBG_MSG_CAMERA, "Camera: Photo Save\r\n" );
+            DBG_SendMessage( DBG_MSG_CAMERA, "Camera: Save Photo Image\r\n" );
             break;
             
         case CAMERA_IDLE:
@@ -189,26 +192,30 @@ void Camera_SaveTask(void * argument)
     {    
         /* Wait for camera save event */
         event_bits = xEventGroupWaitBits(camera_event_group,
-                                         CAMERA_EVENT_SAVE_START,
+                                         CAMERA_EVENT_SAVE_IMAGE,
                                          pdTRUE,
                                          pdTRUE,
                                          CAMERA_EVENT_WAITING );
         
-        if(( event_bits & CAMERA_EVENT_SAVE_START ) == CAMERA_EVENT_SAVE_START )
+        if(( event_bits & CAMERA_EVENT_SAVE_IMAGE ) == CAMERA_EVENT_SAVE_IMAGE )
         {
-            xEventGroupClearBits(camera_event_group, CAMERA_EVENT_SAVE_START);
+            xEventGroupClearBits(camera_event_group, CAMERA_EVENT_SAVE_IMAGE);
             
             fifo_index = camera_info.fifo_input;
             
             /* Data buffer has valid data */
             if((camera_info.fifo_buffer[fifo_index].data[0] == 0xFF) && (camera_info.fifo_buffer[fifo_index].data[1] == 0xD8))
             {        
-                /* TODO: ADD FILENAME HERE, REPLACE THE FILENAME STRING TO DATETIME */
                 /* Fill filename to fifo */
-                sprintf(camera_info.fifo_buffer[fifo_index].filename, "%s.jpg", "20180214005632");
+                HAL_RTC_GetDate(&hrtc, &sDate, RTC_FORMAT_BIN);
+                HAL_RTC_GetTime(&hrtc, &sTime, RTC_FORMAT_BIN);
+                /* JPEG filename is current date+time */
+                sprintf(camera_info.fifo_buffer[fifo_index].filename, "%04d%02d%02d%02d%02d%02d.jpg", 
+                        sDate.Year+2000, sDate.Month, sDate.Date, sTime.Hours, sTime.Minutes, sTime.Seconds);
+                //sprintf(camera_info.fifo_buffer[fifo_index].filename, "%s.jpg", "20180214005632");
                 
                 /* Post wifi send event to wifi task */
-                xEventGroupSetBits( camera_event_group, CAMERA_EVENT_POST_START);
+                xEventGroupSetBits( camera_event_group, CAMERA_EVENT_PUSH_IMAGE);
                 
 #ifdef EN_DEBUG
                 DBG_Sprintf(camera_dbg.buf, "File:%s\r\nSize:%d\r\n", 

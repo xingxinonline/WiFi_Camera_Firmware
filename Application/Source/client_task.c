@@ -57,6 +57,8 @@ void Client_OtaUpdateRequest(void);
 void Client_OtaBinData(void);
 void Client_OtaVerify(void);
 void Client_FactoryNew(void);
+void Client_FeedbackOK(void);
+void Client_FeedbackError(void);
 
 /* Command Handler Implement -----------------------------------------------------------------*/
 
@@ -195,6 +197,7 @@ void Client_RequestHandler(void)
         Client_SetSchedule();
         break;
         
+#if 0 /* Push command not receive, are push by device */
     case MSG_PUSH_IMAGE:    //------------------------- Push command
         Client_PushImage();
         break;
@@ -204,7 +207,7 @@ void Client_RequestHandler(void)
     case MSG_PUSH_ALARM:
         Client_PushAlarm();
         break;
-        
+#endif    
     case MSG_OTA_REQUEST:   //------------------------- OTA command
         Client_OtaUpdateRequest();
         break;
@@ -218,6 +221,14 @@ void Client_RequestHandler(void)
     case MSG_FACTORY_NEW:   //------------------------- Factory New command
         Client_FactoryNew();
         break;
+            
+    case MSG_FB_OK:         //------------------------- Push Feedback command
+        Client_FeedbackOK();
+        break;
+
+    case MSG_FB_ERROR:
+        Client_FeedbackError();
+        break; 
         
     default:
         Client_RespondHandler( MSG_FB_ERROR );
@@ -304,6 +315,7 @@ void Client_GetCameraImage(void)
 void Client_GetState(void)
 {
     DBG_SendMessage(DBG_MSG_CLIENT, "Client: Get State\r\n");
+    //TODO: add state here, not sure now
     Client_RespondHandler( MSG_FB_OK );
 }
 
@@ -424,12 +436,25 @@ void Client_SetWifi(void)
 /*******************************************************************************/
 void Client_SetMotor(void)
 {
-    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Motor\r\n");
-//  Motor_SetFrequency(msg.channel[0], freq);
-//  Motor_SetStep(msg.channel[0], step);  
-//  Motor_SetDirection(msg.channel[0], msg.payload[0]);
+    uint8_t i = 0;
     
-    Client_RespondHandler( MSG_FB_OK );
+    if(message.length >= 25)
+    {
+        for(i = 0; i < 5; i++)
+        {
+            app_config.motor_cfg.m_dir[i] = message.payload[i];
+            app_config.motor_cfg.m_freq[i] = message.payload[5+i];
+            app_config.motor_cfg.m_step[i] = message.payload[10+i];
+        }
+        Mem_WriteConfig();
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Motor OK\r\n");
+        Client_RespondHandler( MSG_FB_OK );        
+    }
+    else
+    {
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Motor Error\r\n");
+        Client_RespondHandler( MSG_FB_ERROR );
+    }
 }
 
 /*******************************************************************************/
@@ -466,8 +491,30 @@ void Client_SetTime(void)
 /*******************************************************************************/
 void Client_SetSchedule(void)
 {
-    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Feed Schedule\r\n");
-    Client_RespondHandler( MSG_FB_OK );
+    uint8_t i = 0;
+    
+    if(((message.length % 7) == 0) && ((message.length / 7) <= 5))
+    {
+        app_config.sch_count = message.length / 7;
+        for(i = 0; i < app_config.sch_count; i++)
+        {
+            app_config.schedule[i].t_hour = message.payload[i * 7 + 0];
+            app_config.schedule[i].t_minute = message.payload[i * 7 + 1];
+            app_config.schedule[i].feed_m1 = message.payload[i * 7 + 2];
+            app_config.schedule[i].feed_m2 = message.payload[i * 7 + 3];
+            app_config.schedule[i].feed_m3 = message.payload[i * 7 + 4];
+            app_config.schedule[i].feed_m4 = message.payload[i * 7 + 5];
+            app_config.schedule[i].feed_m5 = message.payload[i * 7 + 6];
+        }
+        Mem_WriteConfig();
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client:Set Feed Schedule OK\r\n");
+        Client_RespondHandler( MSG_FB_OK );        
+    }
+    else
+    {
+        DBG_SendMessage(DBG_MSG_CLIENT, "Client: Set Feed Schedule Error\r\n");
+        Client_RespondHandler( MSG_FB_ERROR );
+    }
 }
 
 /*******************************************************************************/
@@ -621,6 +668,15 @@ void Client_FactoryNew(void)
     HAL_NVIC_SystemReset();
 }
 
+void Client_FeedbackOK(void)
+{
+    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Push Feedback OK\r\n");
+}
+
+void Client_FeedbackError(void)
+{
+    DBG_SendMessage(DBG_MSG_CLIENT, "Client: Push Feedback Error\r\n");
+}
 
 #endif /* USE_DEMO_VERSION */
 
