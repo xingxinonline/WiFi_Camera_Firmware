@@ -18,7 +18,7 @@ if [ -n "$comment" ]; then
     git commit -m "$comment"
     
     echo ">>> git push to server "
-    #git push origin master
+    git push origin master
     
 else
     echo "you can't push without comment"
