@@ -15,8 +15,8 @@ Created on Wed Feb 14 14:36:24 2018
 """
 
 # bin file location
-filedir = '../WiFi_Camera/Exe/WiFi_Camera.bin'
-savedir = '../WiFi_Camera/Exe/OTA_Firmware.bin'
+filedir = '../EWARM/WiFi_Camera/Exe/WiFi_Camera.bin'
+savedir = '../EWARM/WiFi_Camera/Exe/OTA_Firmware.bin'
 
 # CRC16-CCITT Algorithm 
 def crc16_ccitt(data, length):  

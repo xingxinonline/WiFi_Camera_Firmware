@@ -12,6 +12,9 @@ Description:  insert version(2bytes) crc16(2bytes) and file size(4bytes) at the 
     
     IAR Build Actions: python $PROJ_DIR$\script\generate_v2.py $PROJ_DIR$
     
+Log:
+	v3: improve crc speed, copy ota file to App_OTA_Firmware folder
+	
 Created on Wed Feb 14 14:36:24 2018
 
 @author: Douglas Xie
@@ -23,12 +26,15 @@ import time
 
 # bin file location
 if len(sys.argv) == 1:
-    filedir = '../WiFi_Camera/Exe/WiFi_Camera.bin'
-    savedir = '../WiFi_Camera/Exe/OTA_Firmware_V'
+    filedir = '../EWARM/WiFi_Camera/Exe/WiFi_Camera.bin'
+    savedir = '../EWARM/WiFi_Camera/Exe/OTA_Firmware_V'
+    copydir = '../App_OTA_Firmware/OTA_Firmware_V'
+
 else:
     working_path = sys.argv[1]
     filedir = working_path + '/WiFi_Camera/Exe/WiFi_Camera.bin'
     savedir = working_path + '/WiFi_Camera/Exe/OTA_Firmware_V'
+    copydir = working_path + '/../App_OTA_Firmware/OTA_Firmware_V'
     
 #firmware version pre-str
 prestr = 'RunTime Version V'
@@ -47,7 +53,8 @@ def crc16_ccitt(data, length):
     
             if wTemp != 0:
                 wCRC = wCRC ^ poly16
-                
+            wCRC = wCRC & 0xFFFF
+			
     wCRC = wCRC & 0xFFFF
     return wCRC  
 
@@ -93,7 +100,8 @@ while fw_data[end_index] != str.encode('\r')[0]:
 
 try:
     runtime = bytes.decode(fw_data[start_index:end_index])
-    print("  >>>", runtime)
+    if len(sys.argv) == 1:
+        print("  >>>", runtime)
     ver_str = runtime[17:]
     
     fw_ver = 0
@@ -125,16 +133,24 @@ new_data = bytes(insert_data) + fw_data;
 if len(sys.argv) == 1:
 	print("generate ota firmware file")
 savedir = savedir + ver_str + ".bin"
+copydir = copydir + ver_str + ".bin"
 otaname = 'OTA_Firmware_V'+ ver_str + ".bin"
 ota = open(savedir, 'wb')
 ota.write(new_data)
 ota.flush()
 ota.close()
+ota = open(copydir, 'wb')
+ota.write(new_data)
+ota.flush()
+ota.close()
+
 if len(sys.argv) == 1:
 	print("create OTA firmware success")
 print("  >>> filename: ", otaname)
-print("  >>> path: ", savedir)
-print("  >>> size: ", len(new_data), "bytes")
+print("  >>> size:  ", len(new_data), "bytes")
+print("  >>> crc-ccitt:  0x%04X" % fw_crc16)
+print("  >>> save path: ", savedir)
+print("  >>> copy path: ", copydir)
 print("finish")
 
 if len(sys.argv) == 1:
