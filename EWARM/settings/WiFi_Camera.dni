@@ -14,7 +14,7 @@ LeaveTargetRunning=_ 0
 stlinkserialNo=34460887
 stlinkfoundProbes=
 [DebugChecksum]
-Checksum=-1043332904
+Checksum=-959705443
 [Exceptions]
 StopOnUncaught=_ 0
 StopOnThrow=_ 0
@@ -94,8 +94,9 @@ UseFilter=_ 0
 CStepIntDis=_ 0
 LeaveTargetRunning=_ 0
 [struct_types]
-Fmt0=Client_Ota_t-fw_crc16	4	0
-Fmt1=Client_Ota_t-fw_size	3	0
+Fmt0=Client_Message_t-checksum	4	0
+Fmt1=Client_Ota_t-fw_crc16	4	0
+Fmt2=Client_Ota_t-fw_size	3	0
 [array_types]
 Fmt0=int8_t[5]	4	0
 Fmt1=uint32_t[7]	4	0
@@ -118,7 +119,9 @@ ShowTiming=1
 [Disassemble mode]
 mode=0
 [Breakpoints2]
-Count=0
+Bp0=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Application\Source\client_task.c}.509.9" 0 0 1 "" 0 "" 0
+Bp1=_ 1 "EMUL_CODE" "{$PROJ_DIR$\..\Application\Source\client_task.c}.496.5" 0 0 1 "" 0 "" 0
+Count=2
 [Aliases]
 Count=0
 SuppressDialog=0
