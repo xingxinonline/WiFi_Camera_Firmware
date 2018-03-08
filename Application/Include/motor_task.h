@@ -77,8 +77,10 @@
 typedef struct
 {
     uint8_t  enable;
-    uint8_t  direction;
-    uint16_t step;
+    uint8_t  alarm_state;   // motor alarm state: 0-normal, 1-alarm(stuck)
+    uint8_t  feed_level;    // feed level count
+    uint8_t  direction; 
+    uint16_t step;          // unit step for 1 level, need to modify process
     uint16_t period;
 } Motor_Control_t;
 
@@ -103,6 +105,9 @@ typedef enum
     
 } Motor_State_t;
     
+/* Global Variable ------------------------------------------------------------------------------*/
+extern Motor_Group_t motor_group;
+
 /* Function Declaration -------------------------------------------------------------------------*/
 
 /*******************************************************************************

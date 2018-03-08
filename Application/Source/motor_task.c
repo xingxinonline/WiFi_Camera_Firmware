@@ -668,26 +668,31 @@ void Motor_SetDefault(void)
     motor_group.motor1.period = MOTOR_DEFAULT_PERIOD;
     motor_group.motor1.step = 0;
     motor_group.motor1.enable = 0;
+    motor_group.motor1.alarm_state = 0;
 
     motor_group.motor2.direction = MOTOR_DEFAULT_DIR;
     motor_group.motor2.period = MOTOR_DEFAULT_PERIOD;
     motor_group.motor2.step = 0;
     motor_group.motor2.enable = 0;
+    motor_group.motor2.alarm_state = 0;
 
     motor_group.motor3.direction = MOTOR_DEFAULT_DIR;
     motor_group.motor3.period = MOTOR_DEFAULT_PERIOD;
     motor_group.motor3.step = 0;
     motor_group.motor3.enable = 0;
+    motor_group.motor3.alarm_state = 0;
 
     motor_group.motor4.direction = MOTOR_DEFAULT_DIR;
     motor_group.motor4.period = MOTOR_DEFAULT_PERIOD;
     motor_group.motor4.step = 0;
     motor_group.motor4.enable = 0;
+    motor_group.motor4.alarm_state = 1;
 
     motor_group.motor5.direction = MOTOR_DEFAULT_DIR;
     motor_group.motor5.period = MOTOR_DEFAULT_PERIOD;
     motor_group.motor5.step = 0;
     motor_group.motor5.enable = 0;
+    motor_group.motor5.alarm_state = 1;
 }
 
 

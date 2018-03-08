@@ -315,7 +315,16 @@ void Client_GetCameraImage(void)
 void Client_GetState(void)
 {
     DBG_SendMessage(DBG_MSG_CLIENT, "Client: Get State\r\n");
-    //TODO: add state here, not sure now
+    feedback.index = 0;
+    feedback.length = 5;
+    feedback.payload = (uint8_t *)pvPortMalloc(5);
+    feedback.payload[0] = motor_group.motor1.alarm_state;
+    feedback.payload[1] = motor_group.motor2.alarm_state;
+    feedback.payload[2] = motor_group.motor3.alarm_state;
+    feedback.payload[3] = motor_group.motor4.alarm_state;
+    feedback.payload[4] = motor_group.motor5.alarm_state;
+    Client_RespondHandler( MSG_FB_OK );
+    
     Client_RespondHandler( MSG_FB_OK );
 }
 
