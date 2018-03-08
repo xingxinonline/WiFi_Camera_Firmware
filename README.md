@@ -78,6 +78,7 @@ App Rx: feedback ok + 2 bytes payload of version value: V2.05 = 205 = 0xCD<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 02 00 CD 00 BF A8 A8 A8 A8 A8
 ```
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/get_version.png)
 
 #### Get MAC: 
 App Tx: command, no payload<br>
@@ -88,6 +89,7 @@ App Rx: feedback ok + 18 bytes payload of mac string: 68:C6:3A:A0:FC:5F<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 12 00 36 38 3A 43 36 3A 33 41 3A 41 30 3A 46 43 3A 35 46 00 F4 A8 A8 A8 A8 A8
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/get_mac.png)
 
 #### Get Image: 
 App Tx: command, no payload<br>
@@ -98,6 +100,7 @@ App Rx: feedback ok and wait for push image<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8 
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/get_image.png)
 
 #### Factory New: 
 App Tx: command, no payload<br>
@@ -108,6 +111,8 @@ App Rx: feedback ok and disconnect<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/factory_new.png)
+
 
 #### Set WiFi AP: 
 App Tx: command, <br>
@@ -120,6 +125,8 @@ App Rx: feedback ok<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/set_ap.png)
+
 
 #### Set Web Account: 
 App Tx: command, <br>
@@ -132,7 +139,7 @@ App Rx: feedback ok<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ```
- 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/set_account.png)
 
 #### Set RTC Clock: 
 App Tx: command, <br>
@@ -145,6 +152,7 @@ App Rx: feedback ok<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/set_rtc.png)
 
 #### Set Feed Schedule: 
 App Tx: command, <br>
@@ -157,6 +165,7 @@ App Rx: feedback ok<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/set_schedule.png)
 
 #### Set Motor Parameter: 
 App Tx: command, <br>
@@ -169,6 +178,7 @@ App Rx: feedback ok<br>
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8  
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/set_parameter.png)
 
 #### Push Image: 
 ##### Pack index = 0: device send image information
@@ -198,6 +208,7 @@ App Rx: feedback ok, if device version is lower than new version, return ok to s
 ```c
 7B 7B 7B 7B 7B F0 00 00 00 00 F0 A8 A8 A8 A8 A8
 ``` 
+![image](https://github.com/DouglasXie/WiFi_Camera_PC_Software/blob/master/ScreenShot/ota_request.png)
 
 #### Step2 Send OTA Bin Data: 
 App Tx: command, MSG_OTA_BIN<br>
