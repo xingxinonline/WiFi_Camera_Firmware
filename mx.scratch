@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-<ProjectName>C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera\\WiFi_Camera</ProjectName>
+<ProjectName>E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware\\WiFi_Camera</ProjectName>
 <CMSIS>..\Drivers\CMSIS</CMSIS>
-<HAL_Driver>C:\Users\Dongyang.Xie\STM32Cube\Repository\STM32Cube_FW_F4_V1.16.0\Drivers\CMSIS</HAL_Driver>
+<HAL_Driver>C:\Users\54038\STM32Cube\Repository\STM32Cube_FW_F4_V1.18.0\Drivers\CMSIS</HAL_Driver>
 
 <Toolchain>EWARM</Toolchain>
 	<Toolversion>0</Toolversion>
@@ -63,6 +63,7 @@
 	   <include>..\Drivers\STM32F4xx_HAL_Driver\Inc\Legacy</include>
 	   <include>..\Middlewares\Third_Party\FreeRTOS\Source\portable\IAR\ARM_CM4F</include>
 	   <include>..\Drivers\CMSIS\Device\ST\STM32F4xx\Include</include>
+	   <include>..\Middlewares\Third_Party\FatFs\src</include>
 	   <include>..\Middlewares\Third_Party\FreeRTOS\Source\include</include>
 	   <include>..\Middlewares\Third_Party\FreeRTOS\Source\CMSIS_RTOS</include>
 	   <include>..\Drivers\CMSIS\Include</include>
@@ -75,6 +76,21 @@
 
       <group>
         <name>Middlewares</name>  
+                    <group>
+                            <name>FatFs</name>
+                                            <file>
+                                                    <name>../Middlewares/Third_Party/FatFs/src/option/syscall.c</name>
+                                            </file>
+                                            <file>
+                                                    <name>../Middlewares/Third_Party/FatFs/src/diskio.c</name>
+                                            </file>
+                                            <file>
+                                                    <name>../Middlewares/Third_Party/FatFs/src/ff.c</name>
+                                            </file>
+                                            <file>
+                                                    <name>../Middlewares/Third_Party/FatFs/src/ff_gen_drv.c</name>
+                                            </file>
+                </group>
                     <group>
                             <name>FreeRTOS</name>
                                             <file>
@@ -124,6 +140,12 @@
 						</file>
 						<file>
 							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c</name>
+						</file>
+						<file>
+							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c</name>
+						</file>
+						<file>
+							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c</name>
 						</file>
 						<file>
 							<name>../Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c</name>
@@ -190,6 +212,18 @@
 	      <name>User</name>  
                                 <file>
                                  <name>..\Src\main.c</name>
+                                </file>
+
+                                <file>
+                                 <name>..\Src\bsp_driver_sd.c</name>
+                                </file>
+
+                                <file>
+                                 <name>..\Src\sd_diskio.c</name>
+                                </file>
+
+                                <file>
+                                 <name>..\Src\fatfs.c</name>
                                 </file>
 
                                 <file>

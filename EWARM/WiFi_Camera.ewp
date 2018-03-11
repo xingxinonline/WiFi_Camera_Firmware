@@ -327,6 +327,7 @@
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/include</state>
           <state>$PROJ_DIR$/../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS</state>
           <state>$PROJ_DIR$\..\Application\Include</state>
+          <state>$PROJ_DIR$/../Middlewares/Third_Party/FatFs/src</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>
@@ -1115,6 +1116,9 @@
           <name>$PROJ_DIR$\..\Src\main.c</name>
         </file>
         <file>
+          <name>$PROJ_DIR$\..\Application\Source\sd_task.c</name>
+        </file>
+        <file>
           <name>$PROJ_DIR$\..\Src\stm32f4xx_hal_msp.c</name>
         </file>
         <file>
@@ -1124,6 +1128,15 @@
           <name>$PROJ_DIR$\..\Src\stm32f4xx_it.c</name>
         </file>
       </group>
+      <file>
+        <name>$PROJ_DIR$\..\Src\bsp_driver_sd.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\fatfs.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Src\sd_diskio.c</name>
+      </file>
     </group>
   </group>
   <group>
@@ -1209,6 +1222,21 @@
   </group>
   <group>
     <name>Middlewares</name>
+    <group>
+      <name>FatFs</name>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\diskio.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\ff.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\ff_gen_drv.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\Middlewares\Third_Party\FatFs\src\option\syscall.c</name>
+      </file>
+    </group>
     <group>
       <name>FreeRTOS</name>
       <file>

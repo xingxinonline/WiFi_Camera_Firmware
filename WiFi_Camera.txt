@@ -1,6 +1,6 @@
 Configuration	WiFi_Camera
 STM32CubeMX 	4.23.0
-Date	11/14/2017
+Date	03/11/2018
 MCU	STM32F437ZITx
 
 
@@ -19,6 +19,8 @@ DCMI	Slave 8 bits External Synchro	DCMI_PIXCK	PA6
 DCMI	Slave 8 bits External Synchro	DCMI_VSYNC	PG9
 I2C2	I2C	I2C2_SCL	PF1
 I2C2	I2C	I2C2_SDA	PF0
+RTC	Activate Clock Source	RTC_VS_RTC_Activate	VP_RTC_VS_RTC_Activate
+RTC	Activate Calendar	RTC_VS_RTC_Calendar	VP_RTC_VS_RTC_Calendar
 SDIO	SD 4 bits Wide bus	SDIO_CK	PC12
 SDIO	SD 4 bits Wide bus	SDIO_CMD	PD2
 SDIO	SD 4 bits Wide bus	SDIO_D0	PC8
@@ -89,7 +91,7 @@ Pin Nb	PINs	FUNCTIONs	LABELs
 97	PC7	DCMI_D1	
 98	PC8	SDIO_D0	
 99	PC9	SDIO_D1	
-100	PA8	GPIO_Input	SD_DETECT
+100	PA8	GPIO_EXTI8	SD_DETECT
 101	PA9	USART1_TX	MCU_WIFI_TX
 102	PA10	USART1_RX	MCU_WIFI_RX
 103	PA11	GPIO_Output	MOTOR_LED
@@ -117,7 +119,7 @@ SOFTWARE PROJECT
 
 Project Settings : 
 Project Name : WiFi_Camera
-Project Folder : C:\Users\Dongyang.Xie\OSRAM\O06_Private\WiFi_Camera\FirmwareDev\WiFi_Camera
+Project Folder : E:\F2_OSRAM\O06_Private\WiFi_Camera_Prj\WiFi_Camera_Firmware
 Toolchain / IDE : EWARM
 Firmware Package Name and Version : STM32Cube FW_F4 V1.17.0
 

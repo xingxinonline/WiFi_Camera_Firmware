@@ -9,7 +9,7 @@
 * inserted by the user or by software development tools
 * are owned by their respective copyright owners.
 *
-* Copyright (c) 2017 STMicroelectronics International N.V. 
+* Copyright (c) 2018 STMicroelectronics International N.V. 
 * All rights reserved.
 *
 * Redistribution and use in source and binary forms, with or without 
@@ -50,6 +50,7 @@
 #include "main.h"
 #include "stm32f4xx_hal.h"
 #include "cmsis_os.h"
+#include "fatfs.h"
 
 /* USER CODE BEGIN Includes */
 #include "wifi_task.h"
@@ -74,6 +75,8 @@ RTC_TimeTypeDef sTime;
 RTC_DateTypeDef sDate;
 
 SD_HandleTypeDef hsd;
+DMA_HandleTypeDef hdma_sdio_rx;
+DMA_HandleTypeDef hdma_sdio_tx;
 
 TIM_HandleTypeDef htim6;
 TIM_HandleTypeDef htim9;
@@ -140,7 +143,7 @@ int main(void)
     SystemClock_Config();
     
     /* USER CODE BEGIN SysInit */
-#if 0
+#if 1
     /* USER CODE END SysInit */
     
     /* Initialize all configured peripherals */
@@ -347,8 +350,7 @@ static void MX_RTC_Init(void)
     
     /**Initialize RTC and set the Time and Date 
     */
-    if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR0) != 0x32F2)
-    {
+    if(HAL_RTCEx_BKUPRead(&hrtc, RTC_BKP_DR0) != 0x32F2){
         if (HAL_RTC_SetTime(&hrtc, &sTime, RTC_FORMAT_BCD) != HAL_OK)
         {
             _Error_Handler(__FILE__, __LINE__);
@@ -373,17 +375,8 @@ static void MX_SDIO_SD_Init(void)
     hsd.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
     hsd.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
     hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
-    hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
+    hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_ENABLE;
     hsd.Init.ClockDiv = 0;
-    if (HAL_SD_Init(&hsd) != HAL_OK)
-    {
-        _Error_Handler(__FILE__, __LINE__);
-    }
-    
-    if (HAL_SD_ConfigWideBusOperation(&hsd, SDIO_BUS_WIDE_4B) != HAL_OK)
-    {
-        _Error_Handler(__FILE__, __LINE__);
-    }
     
 }
 
@@ -534,13 +527,19 @@ static void MX_DMA_Init(void)
     
     /* DMA interrupt init */
     /* DMA2_Stream1_IRQn interrupt configuration */
-    HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 5, 0);
+    HAL_NVIC_SetPriority(DMA2_Stream1_IRQn, 7, 0);
     HAL_NVIC_EnableIRQ(DMA2_Stream1_IRQn);
     /* DMA2_Stream2_IRQn interrupt configuration */
-    HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 5, 0);
+    HAL_NVIC_SetPriority(DMA2_Stream2_IRQn, 8, 0);
     HAL_NVIC_EnableIRQ(DMA2_Stream2_IRQn);
+    /* DMA2_Stream3_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 15, 0);
+    HAL_NVIC_EnableIRQ(DMA2_Stream3_IRQn);
+    /* DMA2_Stream6_IRQn interrupt configuration */
+    HAL_NVIC_SetPriority(DMA2_Stream6_IRQn, 15, 0);
+    HAL_NVIC_EnableIRQ(DMA2_Stream6_IRQn);
     /* DMA2_Stream7_IRQn interrupt configuration */
-    HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 5, 0);
+    HAL_NVIC_SetPriority(DMA2_Stream7_IRQn, 7, 0);
     HAL_NVIC_EnableIRQ(DMA2_Stream7_IRQn);
     
 }
@@ -671,7 +670,7 @@ static void MX_GPIO_Init(void)
     
     /*Configure GPIO pin : SD_DETECT_Pin */
     GPIO_InitStruct.Pin = SD_DETECT_Pin;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+    GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
     GPIO_InitStruct.Pull = GPIO_PULLUP;
     HAL_GPIO_Init(SD_DETECT_GPIO_Port, &GPIO_InitStruct);
     
@@ -682,6 +681,10 @@ static void MX_GPIO_Init(void)
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
     HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
     
+    /* EXTI interrupt init*/
+    HAL_NVIC_SetPriority(EXTI9_5_IRQn, 13, 0);
+    HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+    
 }
 
 /* USER CODE BEGIN 4 */
@@ -691,9 +694,12 @@ static void MX_GPIO_Init(void)
 /* StartDefaultTask function */
 void StartDefaultTask(void const * argument)
 {
-    uint16_t key_press_time = 0;
-        
+    /* init code for FATFS */
+    MX_FATFS_Init();
+    
     /* USER CODE BEGIN 5 */
+  	uint16_t key_press_time = 0;
+    
     DBG_SendMessage(DBG_MSG_TASK_STATE, APP_VER_DBG);
     //DBG_SendMessage(DBG_MSG_TASK_STATE, "Default Task Start\r\n");
     

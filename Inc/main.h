@@ -9,7 +9,7 @@
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
-  * Copyright (c) 2017 STMicroelectronics International N.V. 
+  * Copyright (c) 2018 STMicroelectronics International N.V. 
   * All rights reserved.
   *
   * Redistribution and use in source and binary forms, with or without 
@@ -137,6 +137,7 @@
 #define LCD_EN_GPIO_Port GPIOG
 #define SD_DETECT_Pin GPIO_PIN_8
 #define SD_DETECT_GPIO_Port GPIOA
+#define SD_DETECT_EXTI_IRQn EXTI9_5_IRQn
 #define MCU_WIFI_TX_Pin GPIO_PIN_9
 #define MCU_WIFI_TX_GPIO_Port GPIOA
 #define MCU_WIFI_RX_Pin GPIO_PIN_10
